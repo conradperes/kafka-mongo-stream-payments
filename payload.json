@@ -1,0 +1,16 @@
+{
+  "id": "5f712a26-1a43-43b6-8376-c8cc072185de",
+  "": "VALIDATION_PAYMENT",
+  "payload": {
+    "idCard": "1",
+    "balance": "456",
+    "pin": "1234"
+  },
+  "sagaStatus": "SUCEEDEED",
+  "stepStatus": "SUCEEDEED",
+  "type": "order-placement",
+  "version": "0"
+}
+
+
+{"id":"6aa7188b-57c4-4bce-a7dc-0c15dd9bdb56","currentStep":"VALIDATION_PAYMENT","payload":{"idCard":"1","balance":"456","pin":"1234"},"sagaStatus":"SUCEEDEED","stepStatus":"STARTED","type":"order-placement","version":"0"}
