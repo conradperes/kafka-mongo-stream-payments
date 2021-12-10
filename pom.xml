@@ -18,7 +18,31 @@
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <kotlin.version>1.4.10</kotlin.version>
+    <ksqldb.version>0.22.0</ksqldb.version>
   </properties>
+  <repositories>
+    <repository>
+      <id>ksqlDB</id>
+      <name>ksqlDB</name>
+      <url>https://ksqldb-maven.s3.amazonaws.com/maven/</url>
+    </repository>
+    <repository>
+      <id>confluent-packages</id>
+      <name>Confluent</name>
+      <url>https://jenkins-confluent-packages-beta-maven.s3.amazonaws.com/7.1.0-beta210918170926/5/maven/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>ksqlDB</id>
+      <url>https://ksqldb-maven.s3.amazonaws.com/maven/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>confluent-packages</id>
+      <url>https://jenkins-confluent-packages-beta-maven.s3.amazonaws.com/7.1.0-beta210918170926/5/maven/</url>
+    </pluginRepository>
+  </pluginRepositories>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -111,19 +135,13 @@
       <version>1.39.0</version>
     </dependency>
     <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-stdlib-jdk8</artifactId>
-      <version>${kotlin.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-test</artifactId>
-      <version>${kotlin.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-openapi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.confluent.ksql</groupId>
+      <artifactId>ksqldb-api-client</artifactId>
+      <version>${ksqldb.version}</version>
     </dependency>
     <!--dependency>
       <groupId>io.vertx</groupId>
@@ -180,30 +198,6 @@
           <systemProperties>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
           </systemProperties>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jetbrains.kotlin</groupId>
-        <artifactId>kotlin-maven-plugin</artifactId>
-        <version>${kotlin.version}</version>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>test-compile</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>test-compile</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <jvmTarget>1.8</jvmTarget>
         </configuration>
       </plugin>
       <plugin>
