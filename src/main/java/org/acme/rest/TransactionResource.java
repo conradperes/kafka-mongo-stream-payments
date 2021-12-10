@@ -1,7 +1,9 @@
 package org.acme.rest;
 
+import org.acme.ksql.KsqlClientStreamQuery;
 import org.acme.model.Transaction;
 import org.acme.producer.FinalProducer;
+import org.acme.producer.PinProducer;
 import org.acme.producer.TransactionProducer;
 
 import javax.inject.Inject;
@@ -23,6 +25,9 @@ public class TransactionResource {
     @Inject
     FinalProducer finalProducer;
 
+    @Inject
+    PinProducer pinProducer;
+
     @POST
     public Response send(Transaction transaction) {
         producer.sendTransactionToKafka(transaction);
@@ -35,8 +40,18 @@ public class TransactionResource {
     @POST
     @Path("/finalProducer")
     public Response sendFinalProducer(Transaction transaction) {
+        //executeStreamJoin(transaction);
+        pinProducer.sendTransactionToKafka(transaction);
         finalProducer.sendTransactionToKafka(transaction);
         // Return an 202 - Accepted response.
         return Response.accepted().entity(transaction).build();
+    }
+
+
+    private void executeStreamJoin(Transaction transaction) {
+        StringBuilder query =new StringBuilder( "SELECT * FROM join_authorization_stream");
+        query.append(" where id='"+transaction.id+"'");
+        query.append(" EMIT CHANGES;");
+        KsqlClientStreamQuery.queryStream(query.toString());
     }
 }
