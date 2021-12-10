@@ -2,6 +2,7 @@ package org.acme.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.acme.ksql.KsqlClientStreamQuery;
 import org.acme.model.Transaction;
 import org.acme.service.TransactionService;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -31,8 +32,8 @@ public class FinalProducer {
     protected static final String STARTED = "STARTED";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Inject
-    TransactionService transactionService;
+//    @Inject
+//    TransactionService transactionService;
 
     @Inject
     @Channel("compensation-authorization-out")
@@ -42,6 +43,9 @@ public class FinalProducer {
     @Channel("transaction-result-out")
     Emitter<Transaction> emmiterResult;
 
+    @Inject
+    @Channel("confirmation-out")
+    Emitter<Transaction> emmiterConfirmation;
 
 
 
@@ -52,8 +56,9 @@ public class FinalProducer {
             if (transaction != null) {
                 if (transaction.stepStatus.equals(SUCEEDEED) &&
                         transaction.sagaStatus.equals(STARTED)) {
-                    //emitter.send(transaction);
-                    transactionService.insertTransaction(transaction);
+                    emmiterConfirmation.send(transaction);
+                    executeStreamJoin(transaction);
+                    //transactionService.insertTransaction(transaction);
                     //CombinedTransactionsTopology.buildTopology();
                     emmiterResult.send(transaction);
                     logger.info("Transaction Succeeded=" + transaction.id);
@@ -70,16 +75,23 @@ public class FinalProducer {
                 //emmiterResult.send(transaction);
                 logger.info("Empty Record!##### Not sent on the next topic!");
             }
-        }catch (TimeoutException e){
+        }/*catch (TimeoutException e){
             transaction.sagaStatus = "COMPENSATE";
             emitterCompensation.send(transaction);
-        }catch (Exception e){
+        }*/catch (Exception e){
             transaction.stepStatus = "ERROR";
             transaction.sagaStatus = "ERROR";
             emmiterResult.send(transaction);
             e.printStackTrace();
             logger.info("Exception occurred="+e.getMessage());
          }
+    }
+
+    private void executeStreamJoin(Transaction transaction) {
+        StringBuilder query =new StringBuilder( "SELECT * FROM join_authorization_stream");
+        query.append(" where id='"+transaction.id+"'");
+        query.append(" EMIT CHANGES;");
+        KsqlClientStreamQuery.queryStream(query.toString());
     }
 
 }
