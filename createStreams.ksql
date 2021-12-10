@@ -1,0 +1,32 @@
+--drop stream JOIN_AUTHORIZATION_STREAM;
+--drop stream PIN_AUTHORIZATION_STREAM;
+--drop stream confirmation_authorization_stream;
+create stream confirmation_authorization_stream (id VARCHAR,
+currentStep VARCHAR,
+payload VARCHAR,
+sagaStatus VARCHAR,
+stepStatus VARCHAR,
+type VARCHAR,
+version VARCHAR) WITH (KAFKA_TOPIC='confirmation-authorization', VALUE_FORMAT='JSON');
+
+create stream PIN_AUTHORIZATION_STREAM (id VARCHAR,
+currentStep VARCHAR,
+payload VARCHAR,
+sagaStatus VARCHAR,
+stepStatus VARCHAR,
+type VARCHAR,
+version VARCHAR) WITH (KAFKA_TOPIC='pin-authorization', VALUE_FORMAT='JSON');
+
+create stream JOIN_AUTHORIZATION_STREAM as
+select pin.id AS id,
+pin.currentStep AS currentStep,
+pin.payload AS payload,
+pin.sagaStatus AS sagaStatus,
+pin.stepStatus AS stepStatus,
+pin.type as type,
+pin.version as version
+from PIN_AUTHORIZATION_STREAM pin
+inner join CONFIRMATION_AUTHORIZATION_STREAM conf WITHIN 10 SECONDS ON  conf.id=pin.id emit changes;
+
+-- select * from confirmation_authorization_stream emit changes;
+
