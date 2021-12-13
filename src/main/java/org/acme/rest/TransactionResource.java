@@ -25,8 +25,8 @@ public class TransactionResource {
     @Inject
     FinalProducer finalProducer;
 
-    @Inject
-    PinProducer pinProducer;
+//    @Inject
+//    PinProducer pinProducer;
 
     @POST
     public Response send(Transaction transaction) {
@@ -41,7 +41,7 @@ public class TransactionResource {
     @Path("/finalProducer")
     public Response sendFinalProducer(Transaction transaction) {
         //executeStreamJoin(transaction);
-        pinProducer.sendTransactionToKafka(transaction);
+        //pinProducer.sendTransactionToKafka(transaction);
         finalProducer.sendTransactionToKafka(transaction);
         // Return an 202 - Accepted response.
         return Response.accepted().entity(transaction).build();
