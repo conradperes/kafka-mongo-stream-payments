@@ -25,10 +25,11 @@ You can run your application in dev mode that enables live coding using:
 
 
 ```shell script
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"year":2008, "title":"The Dark Knight"}' \
-  http://localhost:8080/
+ curl -d '{"id":"value1", "stepStatus":"value2", \
+ "sagaStatus":"STARTED", "version":"1","type":"Validate_payment",\
+  "paylosion":"1", "payload":{"balance":"1", "idCard":"1", "pin":"1234"} }' -H \
+  "Content-Type: application/json \
+" -X POST http://localhost:8099/finalProducer
 ```
 
 ## Packaging and running the application
