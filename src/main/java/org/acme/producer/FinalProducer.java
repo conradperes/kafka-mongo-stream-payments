@@ -1,7 +1,7 @@
 package org.acme.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
+//import lombok.SneakyThrows;
 import org.acme.ksql.KsqlClientStreamQuery;
 import org.acme.model.Transaction;
 import org.acme.service.TransactionService;
@@ -49,7 +49,7 @@ public class FinalProducer {
 
 
 
-    @SneakyThrows
+    //@SneakyThrows
     public void sendTransactionToKafka(Transaction transaction) {
         logger.info("Final Producer sending last message=" + transaction.toString());
         try {
