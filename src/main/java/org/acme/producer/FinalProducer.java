@@ -32,8 +32,8 @@ public class FinalProducer {
     protected static final String STARTED = "STARTED";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-//    @Inject
-//    TransactionService transactionService;
+    @Inject
+    TransactionService transactionService;
 
     @Inject
     @Channel("compensation-authorization-out")
@@ -56,9 +56,9 @@ public class FinalProducer {
             if (transaction != null) {
                 if (transaction.stepStatus.equals(SUCEEDEED) &&
                         transaction.sagaStatus.equals(STARTED)) {
-                    emmiterConfirmation.send(transaction);
-                    executeStreamJoin(transaction);
-                    //transactionService.insertTransaction(transaction);
+                    //emmiterConfirmation.send(transaction);
+                    //executeStreamJoin(transaction);
+                    transactionService.insertTransaction(transaction);
                     //CombinedTransactionsTopology.buildTopology();
                     emmiterResult.send(transaction);
                     logger.info("Transaction Succeeded=" + transaction.id);
@@ -75,10 +75,10 @@ public class FinalProducer {
                 //emmiterResult.send(transaction);
                 logger.info("Empty Record!##### Not sent on the next topic!");
             }
-        }/*catch (TimeoutException e){
+        }catch (TimeoutException e){
             transaction.sagaStatus = "COMPENSATE";
             emitterCompensation.send(transaction);
-        }*/catch (Exception e){
+        }catch (Exception e){
             transaction.stepStatus = "ERROR";
             transaction.sagaStatus = "ERROR";
             emmiterResult.send(transaction);

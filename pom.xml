@@ -143,11 +143,16 @@
       <artifactId>ksqldb-api-client</artifactId>
       <version>${ksqldb.version}</version>
     </dependency>
-    <!--dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-kafka-client</artifactId>
-      <version>4.2.1</version>
-    </dependency-->
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.12.5</version>
+      </dependency>
+      <!--dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-kafka-client</artifactId>
+        <version>4.2.1</version>
+      </dependency-->
   </dependencies>
   <build>
     <testSourceDirectory>src/main/test</testSourceDirectory>
