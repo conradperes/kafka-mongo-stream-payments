@@ -1,5 +1,6 @@
 package org.acme.security;
 
+import com.amazonaws.regions.Region;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
 import com.amazonaws.services.secretsmanager.model.*;
@@ -16,7 +17,7 @@ public class SecretManager {
 
     public static void getSecret() {
 
-        String secretName = "mongo-db-kubernetes-odin";
+        String secretName = "odin-documentdb-server";
         String region = "sa-east-1";
 
         // Create a Secrets Manager client
@@ -35,7 +36,6 @@ public class SecretManager {
 
         try {
             getSecretValueResult = client.getSecretValue(getSecretValueRequest);
-            logger.info("Senha do MongDB:"+getSecretValueRequest);
         } catch (DecryptionFailureException e) {
             // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
             // Deal with the exception here, and/or rethrow at your discretion.
@@ -66,7 +66,8 @@ public class SecretManager {
         else {
             decodedBinarySecret = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
         }
-
         // Your code goes here.
+        logger.info("Senha do BD="+getSecretValueResult.getSecretString());
+
     }
 }
