@@ -54,7 +54,7 @@ public class FinalProducer {
     public void sendTransactionToKafka(Transaction transaction) {
         logger.info("Final Producer sending last message=" + transaction.toString());
         try {
-            SecretManager.getSecret();
+            //SecretManager.getSecret();
             if (transaction != null) {
                 if (transaction.stepStatus.equals(SUCEEDEED) &&
                         transaction.sagaStatus.equals(STARTED)) {
