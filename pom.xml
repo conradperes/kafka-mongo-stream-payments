@@ -55,6 +55,13 @@
       <artifactId>vertx-mongo-client</artifactId>
       <version>4.2.0</version>
     </dependency-->
+    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
+    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-secretsmanager -->
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-secretsmanager</artifactId>
+      <version>1.12.128</version>
+    </dependency>
     <dependency>
       <groupId>io.confluent.ksql</groupId>
       <artifactId>ksqldb-api-client</artifactId>

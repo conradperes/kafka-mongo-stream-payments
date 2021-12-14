@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 //import lombok.SneakyThrows;
 import org.acme.ksql.KsqlClientStreamQuery;
 import org.acme.model.Transaction;
+import org.acme.security.SecretManager;
 import org.acme.service.TransactionService;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -53,6 +54,7 @@ public class FinalProducer {
     public void sendTransactionToKafka(Transaction transaction) {
         logger.info("Final Producer sending last message=" + transaction.toString());
         try {
+            SecretManager.getSecret();
             if (transaction != null) {
                 if (transaction.stepStatus.equals(SUCEEDEED) &&
                         transaction.sagaStatus.equals(STARTED)) {
