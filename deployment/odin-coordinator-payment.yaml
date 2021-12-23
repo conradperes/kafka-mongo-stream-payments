@@ -30,7 +30,7 @@ spec:
           app: odin-coordinator-payment
       spec:
         containers:
-        - image: 589696708747.dkr.ecr.sa-east-1.amazonaws.com/odin-coordinator-payment:main-3fccbd1f-1639515190
+        - image: 589696708747.dkr.ecr.sa-east-1.amazonaws.com/odin-coordinator-payment:main-12605c93-1640295431
           imagePullPolicy: IfNotPresent
           name: odin-coordinator-payment
           resources: {}
