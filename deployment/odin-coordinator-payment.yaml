@@ -37,22 +37,22 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
-            - name: my-api-token
-              mountPath: /mnt/api-token
-              readOnly: true
-            env:
-              - name: API_TOKEN
-                valueFrom:
-                  secretKeyRef:
-                    name: api-token
-                    key: SECRET_TOKEN
-            volumes:
-              - name: my-api-token
-                csi:
-                  driver: secrets-store.csi.k8s.io
-                  readOnly: true
-                  volumeAttributes:
-                    secretProviderClass: aws-secrets
+          - name: my-api-token
+            mountPath: /mnt/api-token
+            readOnly: true
+          env:
+          - name: API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: api-token
+                key: SECRET_TOKEN
+      volumes:
+      - name: my-api-token
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: aws-secrets
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
