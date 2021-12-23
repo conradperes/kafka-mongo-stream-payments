@@ -39,7 +39,7 @@ spec:
           volumeMounts:
             - name: my-api-token
               mountPath: /mnt/api-token
-              readOnly: true
+              #readOnly: true
             env:
               - name: API_TOKEN
                 valueFrom:
