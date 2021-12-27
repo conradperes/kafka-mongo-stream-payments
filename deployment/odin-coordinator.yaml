@@ -20,7 +20,7 @@ spec:
       volumes:
         - name: my-api-token
           secret:
-            secretName: api-token
+            secretName: API_TOKEN
             csi:
               driver: secrets-store.csi.k8s.io
               readOnly: true
