@@ -1,36 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2021-12-14T21:03:34Z"
-  generation: 1
-  labels:
-    app: odin-coordinator-payment
   name: odin-coordinator-payment
-  namespace: default
-  resourceVersion: "2852079"
-  uid: 4aa66d5b-aa3e-4bb1-9299-803fd53d20fa
+  #annotations:
+  #  deployment.kubernetes.io/revision: "1"
+  #creationTimestamp: "2021-12-14T21:03:34Z"
+  #generation: 1
+  #labels:
+  #  app: odin-coordinator-payment
+
+  #namespace: default
+  #resourceVersion: "2852079"
+  #uid: 4aa66d5b-aa3e-4bb1-9299-803fd53d20fa
 spec:
-  progressDeadlineSeconds: 600
+  #progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
+  #revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: odin-coordinator-payment
     strategy:
+      type: RollingUpdate
       rollingUpdate:
         maxSurge: 25%
         maxUnavailable: 25%
-      type: RollingUpdate
     template:
       metadata:
-        creationTimestamp: null
         labels:
           app: odin-coordinator-payment
+        #creationTimestamp: null
+
       spec:
         containers:
-        - image: 589696708747.dkr.ecr.sa-east-1.amazonaws.com/odin-coordinator-payment:main-3fccbd1f-1639515190
+        - image: 589696708747.dkr.ecr.sa-east-1.amazonaws.com/odin-coordinator-payment:main-12605c93-1640295431
           imagePullPolicy: IfNotPresent
           name: odin-coordinator-payment
           resources: {}
@@ -58,22 +60,4 @@ spec:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2021-12-14T21:03:38Z"
-    lastUpdateTime: "2021-12-14T21:03:38Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2021-12-14T21:03:35Z"
-    lastUpdateTime: "2021-12-14T21:03:38Z"
-    message: ReplicaSet "odin-coordinator-payment-cf7db777" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 1
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
+

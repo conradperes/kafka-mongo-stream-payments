@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odin-coordinator-payment
+  labels:
+    app: odin-coordinator-payment
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: odin-coordinator-payment
+        octopusexport: OctopusExport
+    spec:
+      volumes:
+        - name: my-api-token
+          secret:
+            secretName: API_TOKEN
+      containers:
+        - name: odin-coordinator-payment
+          image: >-
+            589696708747.dkr.ecr.sa-east-1.amazonaws.com/odin-coordinator-payment:main-12605c93-1640295431
+          volumeMounts:
+            - name: my-api-token
+              mountPath: /mnt/api-token
+              subPath: ''
