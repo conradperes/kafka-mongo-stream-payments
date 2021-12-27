@@ -21,6 +21,11 @@ spec:
         - name: my-api-token
           secret:
             secretName: API_TOKEN
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: aws-secrets
       containers:
         - name: odin-coordinator-payment
           image: odin-coordinator-payment
