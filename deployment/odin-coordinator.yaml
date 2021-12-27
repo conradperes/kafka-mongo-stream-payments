@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      octopusexport: OctopusExport
+      app: odin-coordinator-payment
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -15,7 +15,7 @@ spec:
     metadata:
       labels:
         app: odin-coordinator-payment
-        octopusexport: OctopusExport
+        #octopusexport: OctopusExport
     spec:
       volumes:
         - name: my-api-token
