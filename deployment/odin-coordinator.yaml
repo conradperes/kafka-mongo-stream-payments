@@ -23,8 +23,13 @@ spec:
             secretName: API_TOKEN
       containers:
         - name: odin-coordinator-payment
-          image: >-
-            589696708747.dkr.ecr.sa-east-1.amazonaws.com/odin-coordinator-payment:main-12605c93-1640295431
+          image: odin-coordinator-payment
+          env:
+            - name: API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: api-token
+                  key: SECRET_TOKEN
           volumeMounts:
             - name: my-api-token
               mountPath: /mnt/api-token
