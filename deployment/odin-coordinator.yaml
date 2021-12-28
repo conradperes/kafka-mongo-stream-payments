@@ -18,7 +18,7 @@ spec:
         #octopusexport: OctopusExport
     spec:
       volumes:
-        - name: my-api-token
+        - name: nfs-pv
           secret:
             secretName: API_TOKEN
             csi:
@@ -36,6 +36,6 @@ spec:
                   name: api-token
                   key: SECRET_TOKEN
           volumeMounts:
-            - name: my-api-token
+            - name: nfs-pv
               mountPath: /mnt/api-token
               subPath: ''
