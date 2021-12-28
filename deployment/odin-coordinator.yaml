@@ -18,16 +18,9 @@ spec:
         #octopusexport: OctopusExport
     spec:
       volumes:
-        - name: nfs-pv
+        - name: my-api-token
           secret:
             secretName: API_TOKEN
-            items:
-              - key: MONGO_CONFIGMAP_USER
-                path: DATABASE_USER
-              - key: MONGO_CONFIGMAP_PASSWORD
-                path: DATABASE_PASSWORD
-              - key: MONGO_DATABASE_URL
-                path: DATABASE_URL
             csi:
               driver: secrets-store.csi.k8s.io
               readOnly: true
@@ -43,6 +36,6 @@ spec:
                   name: api-token
                   key: SECRET_TOKEN
           volumeMounts:
-            - name: nfs-pv
+            - name: my-api-token
               mountPath: /mnt/api-token
               subPath: ''
