@@ -21,6 +21,13 @@ spec:
         - name: nfs-pv
           secret:
             secretName: API_TOKEN
+            items:
+              - key: MONGO_CONFIGMAP_USER
+                path: DATABASE_USER
+              - key: MONGO_CONFIGMAP_PASSWORD
+                path: DATABASE_PASSWORD
+              - key: MONGO_DATABASE_URL
+                path: DATABASE_URL
             csi:
               driver: secrets-store.csi.k8s.io
               readOnly: true
